@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    {% for article in articles %}
+        <a href='{% url "main:article_detail" article.pk %}'>
+            <div class="article">
+                <h2>{{ article.title }}</h2>
+                <div class="metainfo">
+                    <i>{{ article.created }}</i> <br>
+                    <i>by {{ article.author.username }}</i>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

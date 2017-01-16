@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="article-detail">
+        <h1>{{ article.title }}</h1>
+        <div class="metainfo">
+            <span>{{ article.author }}</span>
+            <span>{{ article.created }}</span>
+        </div>
+        <div class="manage-btn-group">
+            {% csrf_token %}
+            <a id="del-btn"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></a>
+            <a href="{% url 'main:article_edit' article.id %}"><i class="fa fa-pencil fa-2x" aria-hidden="true"></i></a>
+        </div>
+        <hr>
+        <div class="article-body">
+            {{ article.body | safe }}
+        </div>
+        <hr>
+    </div>
+    <script>
+        (function() {
+            var $delete_btn = $('#del-btn');
+
+            var user_id = {{ request.user.id }};
+            var article_of_article = {{ article.author.id }};
+
+            if(user_id !== article_of_article) {
+                console.log("remove!");
+                $('.manage-btn-group').remove();
+            }
+
+            console.log(user_id, article_of_article);
+
+
+
+            $delete_btn.click(function() {
+                if(confirm("정말 삭제하시겠습니까?")) {
+                    $.ajax({
+                        url: "{% url 'main:article_delete' article.id %}",
+                        type: 'DELETE',
+                        success: function(response) {
+                            if(response.status === 1) {
+                                console.log("Response", response);
+                                window.location.href = response.next_url;
+                            }
+                        },
+                        error: function(error) {
+                            console.log("Error, ", error);
+                        }
+                    })
+                } else {
+                    return;
+                }
+            });
+        }());
+    </script>
+{% endblock %}

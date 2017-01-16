@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="auth-container">
+        <h2>로그인</h2>
+
+        {% if form.errors %}
+            <p>이메일 혹은 비밀번호가 맞지 않습니다. 다시 확인해주세요.</p>
+        {% endif %}
+
+        {% if next %}
+            {% if user.is_authenticated %}
+                <p>이미 로그인됐습니다.</p>
+            {% else %}
+                <p>글을 작성하려면 로그인 해주세요.</p>
+            {% endif %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'authapp:login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_{{ form.username.name }}">{{ form.username.label }}</label>
+                <input type="email" class="form-control" name="{{ form.username.name }}" id="id_{{ form.username.name }}">
+            </div>
+            <div class="form-group">
+                <label for="id_{{ form.password.name }}">비밀번호</label>
+                <input type="password" class="form-control" name="{{ form.password.name }}" id="id_{{ form.password.name }}">
+            </div>
+            <div class="form-group">
+                <input class="btn btn-default btn-block btn-lg" type="submit" value="로그인">
+                <input type="hidden" name="next" value="{{ next }}">
+            </div>
+        </form>
+        <a class="btn btn-default btn-lg btn-block" href="{% url 'authapp:signup' %}">회원가입</a>
+    </div>
+
+{% endblock %}
