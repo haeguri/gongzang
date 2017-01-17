@@ -5,4 +5,4 @@ upload_files
 __pycache__
 db.sqlite3
 .idea
-.local_settings.py
+local_settings.py
