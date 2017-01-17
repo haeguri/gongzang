@@ -78,7 +78,7 @@ def article_edit(request, pk):
 
     if request.method == 'GET':
         form = ArticleForm(initial={
-            'author':get_user_model().objects.get(username='admin'),
+            'author':request.user.id,
             'title':article.title,
             'body':article.body
         })
