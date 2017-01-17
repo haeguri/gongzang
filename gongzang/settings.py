@@ -25,7 +25,7 @@ SITE_ID = 1
 SECRET_KEY = 'r7ptu3tnd_!s5xgbs6r6bufg9udtgr=3*slw+na@%9$s8x=l3#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
